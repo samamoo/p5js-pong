@@ -38,7 +38,7 @@ function keyPressed() {
     left.move(10);
   }
 
-  if (key == "j") {
+  if (key == "k") {
     right.move(-10);
   } else if (key == "m") {
     right.move(10);
@@ -51,7 +51,7 @@ class Puck {
     this.x = width / 2;
     this.y = height / 2;
     this.r = 12;
-    this.xspeed = 2;
+    this.xspeed = 4;
     this.yspeed = 4;
   }
 
