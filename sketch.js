@@ -13,8 +13,8 @@ function setup() {
 function draw() {
   background(0);
 
-  // puck.checkPaddle(left);
-  puck.checkPaddle(right);
+  puck.checkPaddleLeft(left);
+  puck.checkPaddleRight(right);
 
   left.display();
   right.display();
@@ -51,14 +51,23 @@ class Puck {
     this.x = width / 2;
     this.y = height / 2;
     this.r = 12;
-    this.xspeed = 1;
+    this.xspeed = 2;
     this.yspeed = 4;
   }
 
 
-  checkPaddle(paddle) {
-    if (this.x + this.r > paddle.x && this.y < paddle.y + paddle.h/2 && this.y > paddle.y - paddle.h/2) {
-      this.xspeed *= -1;
+  checkPaddleLeft(paddle) {
+    if (this.y < paddle.y + paddle.h/2 && 
+      this.y > paddle.y - paddle.h/2 &&
+      this.x - this.r < paddle.x + paddle.w/2) {
+        this.xspeed *= -1
+    }
+  }
+  checkPaddleRight(paddle) {
+    if (this.y < paddle.y + paddle.h/2 && 
+      this.y > paddle.y - paddle.h/2 &&
+      this.x + this.r > paddle.x - paddle.w/2) {
+        this.xspeed *= -1
     }
   }
 
