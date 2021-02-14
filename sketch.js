@@ -2,12 +2,17 @@
 let puck;
 let left;
 let right;
+let leftscore;
+let rightscore;
 
 function setup() {
   createCanvas(600, 400);
   puck = new Puck();
   left = new Paddle(true);
   right = new Paddle(false);
+  leftscore = 0;
+  rightscore = 0;
+
 }
 
 function draw() {
@@ -22,8 +27,13 @@ function draw() {
   right.update();
 
   puck.update();
-  puck.display();
   puck.edges();
+  puck.display();
+
+  fill(255);
+  textSize(32);
+  text(leftscore, 32, 40);
+  text(rightscore, width-64, 40)
 }
 
 function keyReleased() {
@@ -46,6 +56,7 @@ function keyPressed() {
 
 }
 
+
 class Puck {
   constructor() {
     this.x = width / 2;
@@ -60,14 +71,18 @@ class Puck {
     if (this.y < paddle.y + paddle.h/2 && 
       this.y > paddle.y - paddle.h/2 &&
       this.x - this.r < paddle.x + paddle.w/2) {
-        this.xspeed *= -1
+        if (this.x > paddle.x) {
+          this.xspeed *= -1
+        }
     }
   }
   checkPaddleRight(paddle) {
     if (this.y < paddle.y + paddle.h/2 && 
       this.y > paddle.y - paddle.h/2 &&
       this.x + this.r > paddle.x - paddle.w/2) {
-        this.xspeed *= -1
+        if (this.x < paddle.x) {
+          this.xspeed *= -1
+        }
     }
   }
 
@@ -86,7 +101,12 @@ class Puck {
       this.yspeed *= -1;
     }
     if (this.x > width) {
-      reset()
+      leftscore++;
+      this.reset()
+    }
+    if (this.x < 0) {
+      rightscore++;
+      this.reset()
     }
   }
 
@@ -101,7 +121,7 @@ class Paddle {
   constructor(bool) {
     this.x;
     this.y = height/2;
-    this.w = 10;
+    this.w = 15;
     this.h = 100;
     this.bool = bool;
     this.ychange = 0;
